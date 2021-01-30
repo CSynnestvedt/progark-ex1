@@ -1,6 +1,7 @@
 package com.mygdx.game.sprites;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.Game;
 
@@ -15,7 +16,7 @@ public abstract class Helicopter {
     public Helicopter(int x, int y){
         position = new Vector2(x, y);
         velocity = new Vector2(SPEED, SPEED);
-        updateTexture();
+        texture = new Texture("heli1.png");
     }
 
     public abstract void update(float dt);
