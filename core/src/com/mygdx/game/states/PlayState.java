@@ -2,6 +2,7 @@ package com.mygdx.game.states;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.Game;
+import com.mygdx.game.sprites.AutoHelicopter;
 import com.mygdx.game.sprites.Helicopter;
 
 public class PlayState extends State {
@@ -11,7 +12,7 @@ public class PlayState extends State {
 
     public PlayState(GameStateManager gsm){
         super(gsm);
-        helicopter = new Helicopter(500 , 350);
+        helicopter = new AutoHelicopter(500 , 350);
         cam.setToOrtho(false, Game.WIDTH, Game.HEIGHT);
     }
 

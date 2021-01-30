@@ -4,31 +4,21 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.Game;
 
-public class Helicopter {
+public abstract class Helicopter {
 
-    private static final int SPEED = -150;
+    protected static final int SPEED = -150;
 
-    private Texture texture;
-    private Vector2 position;
-    private Vector2 velocity;
+    protected Texture texture;
+    protected Vector2 position;
+    protected Vector2 velocity;
 
     public Helicopter(int x, int y){
         position = new Vector2(x, y);
         velocity = new Vector2(SPEED, SPEED);
-        setTexture(velocity.x);
+        updateTexture();
     }
 
-    public void update(float dt) {
-
-        if (wallHit(position.x)){
-            velocity.x = -velocity.x;
-            setTexture(velocity.x);
-        }
-        if (roofFloorHit(position.y)){
-            velocity.y = -velocity.y;
-        }
-        position.add(velocity.x*dt, velocity.y*dt);
-    }
+    public abstract void update(float dt);
 
     public Vector2 getPosition() {
         return position;
@@ -42,15 +32,15 @@ public class Helicopter {
         texture.dispose();
     }
 
-    private boolean wallHit(float pos) {
+    protected boolean wallHit(float pos) {
         return ((pos <= 0 && velocity.x < 0) || (pos >= Game.WIDTH - texture.getWidth() && velocity.x > 0));
     }
-    private boolean roofFloorHit(float pos) {
+    protected boolean roofFloorHit(float pos) {
         return ((pos <= 0 && velocity.y < 0) || (pos >= Game.HEIGHT-texture.getHeight() && velocity.y > 0));
     }
 
-    private void setTexture(float speed) {
-        if (speed < 0) {
+    protected void updateTexture() {
+        if (velocity.x < 0) {
             texture = new Texture("heli1.png");
         }
         else {
