@@ -3,6 +3,7 @@ package com.mygdx.game.states;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.Game;
+import com.mygdx.game.sprites.AnimationHelicopter;
 import com.mygdx.game.sprites.AutoHelicopter;
 import com.mygdx.game.sprites.Helicopter;
 import com.mygdx.game.sprites.PilotedHelicopter;
@@ -33,7 +34,10 @@ public class HelicopterState extends State {
     public void render(SpriteBatch batch) {
         batch.setProjectionMatrix(cam.combined);
         batch.begin();
-        batch.draw(helicopter.getTexture(), helicopter.getPosition().x, helicopter.getPosition().y);
+        if (helicopter instanceof AnimationHelicopter)
+            batch.draw(((AnimationHelicopter) helicopter).getTextureRegion(), helicopter.getPosition().x, helicopter.getPosition().y);
+        else
+            batch.draw(helicopter.getTexture(), helicopter.getPosition().x, helicopter.getPosition().y);
         if (helicopter instanceof PilotedHelicopter) {
             bmf.draw(batch, helicopter.toString(), 10, 680);
         }

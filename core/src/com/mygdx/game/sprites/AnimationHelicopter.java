@@ -20,7 +20,9 @@ public class AnimationHelicopter extends AutoHelicopter {
     }
 
     @Override
-    protected void updateTexture() {
-        this.texture = animation.getFrame().getTexture();
+    protected void updateTexture() {} // Disabled for animation purposes
+
+    public TextureRegion getTextureRegion() {
+        return this.animation.getFrame();
     }
 }
