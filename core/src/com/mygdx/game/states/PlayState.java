@@ -2,16 +2,16 @@ package com.mygdx.game.states;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.Game;
-import com.mygdx.game.sprites.Heli;
+import com.mygdx.game.sprites.Helicopter;
 
 public class PlayState extends State {
 
-    private Heli heli;
+    private Helicopter helicopter;
 
 
     public PlayState(GameStateManager gsm){
         super(gsm);
-        heli = new Heli(500 , 350);
+        helicopter = new Helicopter(500 , 350);
         cam.setToOrtho(false, Game.WIDTH, Game.HEIGHT);
     }
 
@@ -22,19 +22,19 @@ public class PlayState extends State {
     @Override
     public void update(float dt) {
         handleInput();
-        heli.update(dt);
+        helicopter.update(dt);
     }
 
     @Override
     public void render(SpriteBatch batch) {
         batch.setProjectionMatrix(cam.combined);
         batch.begin();
-        batch.draw(heli.getTexture(), heli.getPosition().x, heli.getPosition().y);
+        batch.draw(helicopter.getTexture(), helicopter.getPosition().x, helicopter.getPosition().y);
         batch.end();
     }
 
     @Override
     public void dispose() {
-        heli.dispose();
+        helicopter.dispose();
     }
 }

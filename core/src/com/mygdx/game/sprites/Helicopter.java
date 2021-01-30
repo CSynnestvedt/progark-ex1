@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.Game;
 
-public class Heli {
+public class Helicopter {
 
     private static final int SPEED = -150;
 
@@ -12,7 +12,7 @@ public class Heli {
     private Vector2 position;
     private Vector2 velocity;
 
-    public Heli(int x, int y){
+    public Helicopter(int x, int y){
         position = new Vector2(x, y);
         velocity = new Vector2(SPEED, SPEED);
         setTexture(velocity.x);
