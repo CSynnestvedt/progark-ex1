@@ -2,7 +2,7 @@ package com.mygdx.game.sprites;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.game.Helicopter;
+import com.mygdx.game.Game;
 
 public class Heli {
 
@@ -43,10 +43,10 @@ public class Heli {
     }
 
     private boolean wallHit(float pos) {
-        return ((pos <= 0 && velocity.x < 0) || (pos >= Helicopter.WIDTH - texture.getWidth() && velocity.x > 0));
+        return ((pos <= 0 && velocity.x < 0) || (pos >= Game.WIDTH - texture.getWidth() && velocity.x > 0));
     }
     private boolean roofFloorHit(float pos) {
-        return ((pos <= 0 && velocity.y < 0) || (pos >= Helicopter.HEIGHT-texture.getHeight() && velocity.y > 0));
+        return ((pos <= 0 && velocity.y < 0) || (pos >= Game.HEIGHT-texture.getHeight() && velocity.y > 0));
     }
 
     private void setTexture(float speed) {

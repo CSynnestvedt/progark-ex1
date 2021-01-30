@@ -8,7 +8,7 @@ import com.mygdx.game.states.GameStateManager;
 import com.mygdx.game.states.MenuState;
 import com.mygdx.game.states.PlayState;
 
-public class Helicopter extends ApplicationAdapter {
+public class Game extends ApplicationAdapter {
 
 	public static final int WIDTH = 1000;
 	public static final int HEIGHT = 700;

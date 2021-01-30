@@ -1,7 +1,7 @@
 package com.mygdx.game.states;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.game.Helicopter;
+import com.mygdx.game.Game;
 import com.mygdx.game.sprites.Heli;
 
 public class PlayState extends State {
@@ -12,7 +12,7 @@ public class PlayState extends State {
     public PlayState(GameStateManager gsm){
         super(gsm);
         heli = new Heli(500 , 350);
-        cam.setToOrtho(false, Helicopter.WIDTH, Helicopter.HEIGHT);
+        cam.setToOrtho(false, Game.WIDTH, Game.HEIGHT);
     }
 
     protected void handleInput() {
