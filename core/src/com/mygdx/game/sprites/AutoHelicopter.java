@@ -7,7 +7,6 @@ public class AutoHelicopter extends Helicopter {
     }
 
     public void update(float dt) {
-
         if (wallHit(position.x)){
             velocity.x = -velocity.x;
             updateTexture();

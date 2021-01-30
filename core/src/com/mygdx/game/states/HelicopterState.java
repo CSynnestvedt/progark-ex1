@@ -5,14 +5,14 @@ import com.mygdx.game.Game;
 import com.mygdx.game.sprites.AutoHelicopter;
 import com.mygdx.game.sprites.Helicopter;
 
-public class PlayState extends State {
+public class HelicopterState extends State {
 
     private Helicopter helicopter;
 
 
-    public PlayState(GameStateManager gsm){
+    public HelicopterState(GameStateManager gsm, Helicopter helicopter){
         super(gsm);
-        helicopter = new AutoHelicopter(500 , 350);
+        this.helicopter = helicopter;
         cam.setToOrtho(false, Game.WIDTH, Game.HEIGHT);
     }
 

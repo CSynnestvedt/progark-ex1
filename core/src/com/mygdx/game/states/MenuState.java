@@ -22,7 +22,7 @@ public class MenuState extends State {
             TaskButton btn = new TaskButton(x, y, i);
             taskButtons.add(btn);
         }
-        states.add(new PlayState(gsm)); // Add more states here as they are created
+        states.add(new HelicopterState(gsm)); // Add more states here as they are created
     }
 
     @Override
