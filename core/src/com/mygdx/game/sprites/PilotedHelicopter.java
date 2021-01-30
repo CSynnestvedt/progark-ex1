@@ -53,4 +53,8 @@ public class PilotedHelicopter extends Helicopter {
         position.add(velocity);
     }
 
+    public String toString() {
+        return "X: " + position.x + " Y: " + position.y;
+    }
+
 }
