@@ -32,11 +32,11 @@ public abstract class Helicopter {
         texture.dispose();
     }
 
-    protected boolean wallHit(float pos) {
-        return ((pos <= 0 && velocity.x < 0) || (pos >= Game.WIDTH - texture.getWidth() && velocity.x > 0));
+    protected boolean wallHit() {
+        return ((position.x<= 0 && velocity.x < 0) || (position.x >= Game.WIDTH - texture.getWidth() && velocity.x > 0));
     }
-    protected boolean roofFloorHit(float pos) {
-        return ((pos <= 0 && velocity.y < 0) || (pos >= Game.HEIGHT-texture.getHeight() && velocity.y > 0));
+    protected boolean roofFloorHit() {
+        return ((position.y <= 0 && velocity.y < 0) || (position.y >= Game.HEIGHT-texture.getHeight() && velocity.y > 0));
     }
 
     protected void updateTexture() {

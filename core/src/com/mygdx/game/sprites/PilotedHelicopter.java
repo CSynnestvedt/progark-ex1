@@ -25,7 +25,6 @@ public class PilotedHelicopter extends Helicopter {
     @Override
     public void update(float dt) {
         if (Gdx.input.isTouched()) {
-            // cam.unproject(touch); // Touch and position use different coordinate systems. Must unproject to match them.
             handleMovement(dt);
             updateTexture(); // In case copter is moving the other way now
         }
@@ -33,21 +32,24 @@ public class PilotedHelicopter extends Helicopter {
 
     private void handleMovement(float dt) {
         touch.set(Gdx.input.getX(), Gdx.input.getY());
+        touch.y = Game.HEIGHT - touch.y; // Flip touch coordinate system so it matches texture coord system
         float travelDistance = SPEED * dt;
-        touch.y = Game.HEIGHT - touch.y;
-        distanceRay.set(touch.x, touch.y).sub(position.x + TEXTURE_X_CENTRE, position.y + TEXTURE_Y_CENTRE); // Vector from touchpoint to player
+        distanceRay.set(touch.x, touch.y).sub(position.x + TEXTURE_X_CENTRE, position.y + TEXTURE_Y_CENTRE); // Vector from touchpoint to helicopter
+
         boolean canReachDest = distanceRay.len() <= travelDistance;
+        boolean touchToLeftOfCopter = touch.x < position.x;
+        boolean touchAboveCopter = touch.y > position.y;
         if (canReachDest) {
-            boolean touchToLeftOfCopter = touch.x < position.x;
-            boolean touchAboveCopter = touch.y > position.y;
             velocity.x = touchToLeftOfCopter ? touch.x + TEXTURE_X_CENTRE : touch.x - TEXTURE_X_CENTRE;
             velocity.y = touchAboveCopter ? touch.y + TEXTURE_Y_CENTRE : touch.y - TEXTURE_Y_CENTRE;
         } else {
             distanceRay.nor().scl(travelDistance);
-            System.out.println("Scaled " + distanceRay);
             velocity.x = -distanceRay.x;
             velocity.y = -distanceRay.y;
         }
+        // Check for potential wall hits after adding speed
+        velocity.x = wallHit() ? 0 : velocity.x;
+        velocity.y = roofFloorHit() ? 0 : velocity.y;
         position.add(velocity);
     }
 
