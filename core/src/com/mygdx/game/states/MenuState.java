@@ -5,6 +5,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.Game;
+import com.mygdx.game.sprites.AutoHelicopter;
+import com.mygdx.game.sprites.Helicopter;
+import com.mygdx.game.sprites.PilotedHelicopter;
 import com.mygdx.game.sprites.TaskButton;
 
 public class MenuState extends State {
@@ -22,7 +25,7 @@ public class MenuState extends State {
             TaskButton btn = new TaskButton(x, y, i);
             taskButtons.add(btn);
         }
-        states.add(new HelicopterState(gsm)); // Add more states here as they are created
+        generateStates();
     }
 
     @Override
@@ -55,5 +58,12 @@ public class MenuState extends State {
         for (TaskButton btn : taskButtons) {
             btn.dispose();
         }
+    }
+
+    private void generateStates() {
+        Helicopter autoCopter = new AutoHelicopter(500, 350);
+        Helicopter pilotCopter = new PilotedHelicopter(500, 350, cam);
+        states.add(new HelicopterState(gsm, autoCopter));
+        states.add(new HelicopterState(gsm, pilotCopter)); // Add more states here as they are created
     }
 }
