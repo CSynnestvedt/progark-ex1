@@ -4,25 +4,37 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.Helicopter;
-
-import java.awt.Button;
+import com.mygdx.game.sprites.TaskButton;
 
 public class MenuState extends State {
 
+    private Array<TaskButton> taskButtons = new Array<>();
+    private Array<State> states = new Array<>();
 
-    private Texture texture;
-
-    public MenuState(GameStateManager gsm){
+    public MenuState(GameStateManager gsm) {
         super(gsm);
-
-        texture = new Texture("heli1.png");
+        final int BUTTON_PADDING = 40;
+        final int FIRST_BUTTON_X = 300;
+        for (int i = 1; i < 5; i++) {
+            float x = FIRST_BUTTON_X + (i - 1) * (TaskButton.WIDTH + BUTTON_PADDING);
+            float y = Helicopter.HEIGHT / 2 - TaskButton.HEIGHT / 2; // To center the buttons
+            TaskButton btn = new TaskButton(x, y, i);
+            taskButtons.add(btn);
+        }
+        states.add(new PlayState(gsm)); // Add more states here as they are created
     }
 
     @Override
     protected void handleInput() {
         if (Gdx.input.justTouched()) {
-            gsm.set(new PlayState(gsm));
+            for (int i = 0; i < taskButtons.size; i++) {
+                TaskButton btn = taskButtons.get(i);
+                if (btn.isTouched(Gdx.input.getX(), Gdx.input.getY()))
+                    gsm.set(states.get(btn.getTaskNumber() - 1));
+            }
         }
     }
 
@@ -34,12 +46,16 @@ public class MenuState extends State {
     @Override
     public void render(SpriteBatch batch) {
         batch.begin();
-        batch.draw(texture, 500, 350);
+        for (TaskButton btn : taskButtons) {
+            batch.draw(btn.getTexture(), btn.getPos().x, btn.getPos().y);
+        }
         batch.end();
     }
 
     @Override
     public void dispose() {
-        texture.dispose();
+        for (TaskButton btn : taskButtons) {
+            btn.dispose();
+        }
     }
 }
