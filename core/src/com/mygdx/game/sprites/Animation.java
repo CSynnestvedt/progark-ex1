@@ -9,6 +9,7 @@ public class Animation {
     private float currentFrameTime; // How long current frame has been in view
     private int frameCount; // No of frames in animation
     private int frame; // Current frame
+    private boolean flip; // Should animation be flipped
 
     public Animation(TextureRegion region, int frameCount, float cycleTime) {
         frames = new Array<>();
@@ -20,6 +21,7 @@ public class Animation {
         this.frameCount = frameCount;
         maxFrameTime = cycleTime / frameCount;
         frame = 0;
+        flip = false;
     }
 
     public void update(float dt) {
@@ -35,5 +37,12 @@ public class Animation {
 
     public TextureRegion getFrame() {
         return frames.get(frame);
+    }
+
+    public void toggleFlip() {
+        for (TextureRegion frame :
+                frames) {
+            frame.flip(true, false);
+        }
     }
 }

@@ -20,9 +20,11 @@ public class AnimationHelicopter extends AutoHelicopter {
     }
 
     @Override
-    protected void updateTexture() {} // Disabled for animation purposes
+    protected void updateTexture() {
+        animation.toggleFlip();
+    }
 
-    public TextureRegion getTextureRegion() {
+    public TextureRegion getTextureRegion() { // Optimally should've been texture but this doesn't work
         return this.animation.getFrame();
     }
 }
