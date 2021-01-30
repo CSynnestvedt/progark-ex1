@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.Game;
+import com.mygdx.game.sprites.AnimationHelicopter;
 import com.mygdx.game.sprites.AutoHelicopter;
 import com.mygdx.game.sprites.Helicopter;
 import com.mygdx.game.sprites.PilotedHelicopter;
@@ -62,8 +63,10 @@ public class MenuState extends State {
 
     private void generateStates() {
         Helicopter autoCopter = new AutoHelicopter(500, 350);
-        Helicopter pilotCopter = new PilotedHelicopter(500, 350, cam);
+        Helicopter pilotCopter = new PilotedHelicopter(500, 350);
+        Helicopter animCopter = new AnimationHelicopter(500, 350);
         states.add(new HelicopterState(gsm, autoCopter));
         states.add(new HelicopterState(gsm, pilotCopter)); // Add more states here as they are created
+        states.add(new HelicopterState(gsm, animCopter));
     }
 }
