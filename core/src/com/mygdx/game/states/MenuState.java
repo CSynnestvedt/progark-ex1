@@ -70,7 +70,8 @@ public class MenuState extends State {
         Helicopter animCopter3 = new AnimationHelicopter(randomPos(), randomVelocity());
         states.add(new HelicopterState(gsm, autoCopter));
         states.add(new HelicopterState(gsm, pilotCopter));
-        states.add(new HelicopterState(gsm, animCopter1, animCopter2, animCopter3)); // Add more states here as they are created
+        states.add(new HelicopterState(gsm, animCopter1, animCopter2, animCopter3));
+        states.add(new PongState(gsm));
     }
 
     private Vector2 randomPos(){
