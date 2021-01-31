@@ -9,7 +9,9 @@ public class Ball {
 
     private static final float INITIALXPOS = (float) (Game.WIDTH/2 - 7.5);
     private static final float INITIALYPOS = (float) (Game.HEIGHT/2 - 7.5);
-    private static final int INITIALSPEED = 250;
+    private static final int INITIALSPEED = 200;
+
+    private float timePassed = 0;
 
     private Vector2 pos;
     private Vector2 velocity;
@@ -30,6 +32,7 @@ public class Ball {
     public void reset() {
         pos.x = INITIALXPOS;
         pos.y = INITIALYPOS;
+        timePassed = 0;
     }
 
     public void startGame() {
@@ -40,6 +43,12 @@ public class Ball {
         hitFrame();
         pos.add(velocity.x*dt, velocity.y*dt);
         bounds.setPosition(getPos().x, getPos().y);
+        timePassed += dt;
+        if (timePassed > 7) {
+            System.out.println("Time passed");
+            velocity.scl(1.05f);
+            timePassed = 0;
+        }
     };
 
     public Vector2 getPos() {
