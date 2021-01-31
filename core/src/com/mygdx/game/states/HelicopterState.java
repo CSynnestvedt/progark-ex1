@@ -42,8 +42,10 @@ public class HelicopterState extends State {
             if (helicopterArray.get(i) instanceof AnimationHelicopter) {
                 for (int j = i+1; j < helicopterArray.size(); j++) {
                     if (helicopterArray.get(j) instanceof AnimationHelicopter) {
-                        if (((AnimationHelicopter) helicopterArray.get(i)).collision(((AnimationHelicopter) helicopterArray.get(j)).getBounds())){
-                            ((AnimationHelicopter) helicopterArray.get(i)).changeDirection((AnimationHelicopter) helicopterArray.get(j));
+                        AnimationHelicopter iHelicopter = (AnimationHelicopter) helicopterArray.get(i);
+                        AnimationHelicopter jHelicopter = (AnimationHelicopter) helicopterArray.get(j);
+                        if (iHelicopter.collision(jHelicopter.getBounds())){
+                            iHelicopter.changeDirection(jHelicopter);
                         }
                     }
                 }
