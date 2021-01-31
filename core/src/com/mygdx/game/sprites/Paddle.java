@@ -7,6 +7,8 @@ import com.mygdx.game.Game;
 
 public abstract class Paddle {
 
+    protected int SPEED = 100; // Probably needs to be changed
+
     protected Texture texture;
     protected Rectangle bounds;
 
@@ -15,13 +17,14 @@ public abstract class Paddle {
 
     public Paddle(boolean isLeftPaddle) {
         texture = new Texture("paddle.png");
-        float xPos = isLeftPaddle ? 50 - bounds.getWidth() / 2 : Game.WIDTH - 50 + bounds.getWidth() / 2;
-        float yPos = Game.WIDTH / 2 - bounds.getHeight() / 2;
+        float xPos = isLeftPaddle ? 50 - texture.getWidth() / 2 : Game.WIDTH - 50 + texture.getWidth() / 2;
+        float yPos = Game.WIDTH / 2 - texture.getHeight() / 2;
         position = new Vector2(xPos, yPos);
+        bounds = new Rectangle(xPos, yPos, texture.getWidth(), texture.getHeight());
         velocity = new Vector2(0, 0);
     }
 
-    public Vector2 getPosition() { return position; }
+    public Vector2 getPos() { return position; }
     public Texture getTexture() { return texture; }
     public abstract void update(float dt);
     public void dispose() { texture.dispose();}
