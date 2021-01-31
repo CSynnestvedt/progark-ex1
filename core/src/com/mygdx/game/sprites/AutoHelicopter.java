@@ -1,5 +1,6 @@
 package com.mygdx.game.sprites;
 
+
 public class AutoHelicopter extends Helicopter {
 
     public AutoHelicopter(int x, int y) {

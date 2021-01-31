@@ -2,23 +2,34 @@ package com.mygdx.game.states;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
+import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.Game;
+import com.mygdx.game.sprites.Animation;
 import com.mygdx.game.sprites.AnimationHelicopter;
-import com.mygdx.game.sprites.AutoHelicopter;
 import com.mygdx.game.sprites.Helicopter;
 import com.mygdx.game.sprites.PilotedHelicopter;
 
+import java.util.ArrayList;
+import java.util.List;
+
+
 public class HelicopterState extends State {
 
-    private Helicopter helicopter;
+    private List<Helicopter> helicopterArray = new ArrayList<Helicopter>();
     private BitmapFont bmf = new BitmapFont();
 
 
-    public HelicopterState(GameStateManager gsm, Helicopter helicopter){
+    public HelicopterState(GameStateManager gsm, Helicopter ... helicopters){
         super(gsm);
-        this.helicopter = helicopter;
+        for (Helicopter helicopter : helicopters) {
+            helicopterArray.add(helicopter);
+        }
+
         cam.setToOrtho(false, Game.WIDTH, Game.HEIGHT);
     }
+
+
 
     protected void handleInput() {
 
@@ -27,25 +38,42 @@ public class HelicopterState extends State {
     @Override
     public void update(float dt) {
         handleInput();
-        helicopter.update(dt);
+        for (int i = 0; i < helicopterArray.size()-1; i++) {
+            if (helicopterArray.get(i) instanceof AnimationHelicopter) {
+                for (int j = i+1; j < helicopterArray.size(); j++) {
+                    if (helicopterArray.get(j) instanceof AnimationHelicopter) {
+                        if (((AnimationHelicopter) helicopterArray.get(i)).collision(((AnimationHelicopter) helicopterArray.get(j)).getBounds())){
+                            ((AnimationHelicopter) helicopterArray.get(i)).changeDirection((AnimationHelicopter) helicopterArray.get(j));
+                        }
+                    }
+                }
+            }
+        }
+        for (Helicopter helicopter : helicopterArray) {
+            helicopter.update(dt);
+        }
     }
 
     @Override
     public void render(SpriteBatch batch) {
         batch.setProjectionMatrix(cam.combined);
         batch.begin();
-        if (helicopter instanceof AnimationHelicopter)
-            batch.draw(((AnimationHelicopter) helicopter).getTextureRegion(), helicopter.getPosition().x, helicopter.getPosition().y);
-        else
-            batch.draw(helicopter.getTexture(), helicopter.getPosition().x, helicopter.getPosition().y);
-        if (helicopter instanceof PilotedHelicopter) {
-            bmf.draw(batch, helicopter.toString(), 10, 680);
+        for (Helicopter helicopter: helicopterArray) {
+            if (helicopter instanceof AnimationHelicopter)
+                batch.draw(((AnimationHelicopter) helicopter).getTextureRegion(), helicopter.getPosition().x, helicopter.getPosition().y);
+            else
+                batch.draw(helicopter.getTexture(), helicopter.getPosition().x, helicopter.getPosition().y);
+            if (helicopter instanceof PilotedHelicopter) {
+                bmf.draw(batch, helicopter.toString(), 10, 680);
+            }
         }
         batch.end();
     }
 
     @Override
     public void dispose() {
-        helicopter.dispose();
+        for (Helicopter helicopter: helicopterArray) {
+            helicopter.dispose();
+        }
     }
 }
