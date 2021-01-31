@@ -30,13 +30,14 @@ public abstract class Paddle {
             velocity.set(0, 0);
         }
         position.add(velocity);
+        bounds.setPosition(position.x, position.y);
     }
 
     protected boolean isBoundaryHit() {
         boolean roofHit = bounds.y + bounds.height >= Game.HEIGHT;
         boolean isMovingDown = velocity.y < 0;
         boolean floorHit = bounds.y <= 0;
-        return roofHit && (!isMovingDown) || floorHit && isMovingDown;
+        return (roofHit && (!isMovingDown)) || (floorHit && isMovingDown);
     }
 
     public Vector2 getPos() { return position; }
