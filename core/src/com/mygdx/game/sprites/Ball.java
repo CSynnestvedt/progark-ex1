@@ -9,7 +9,7 @@ public class Ball {
 
     private static final float INITIALXPOS = (float) (Game.WIDTH/2 - 7.5);
     private static final float INITIALYPOS = (float) (Game.HEIGHT/2 - 7.5);
-    private static final int INITIALSPEED = 150;
+    private static final int INITIALSPEED = 250;
 
     private Vector2 pos;
     private Vector2 velocity;
@@ -18,7 +18,7 @@ public class Ball {
 
     public Ball() {
         ball = new Texture("ball.png");
-        reset();
+        pos = new Vector2(INITIALXPOS, INITIALYPOS);
         velocity = new Vector2(0, 0);
         bounds = new Rectangle(pos.x, pos.y, ball.getWidth(), ball.getHeight());
     }
@@ -27,6 +27,10 @@ public class Ball {
         startGame();
     }
 
+    public void reset() {
+        pos.x = INITIALXPOS;
+        pos.y = INITIALYPOS;
+    }
 
     public void startGame() {
         velocity = new Vector2(INITIALSPEED*getStartingDirection(), INITIALSPEED*getStartingDirection());
@@ -35,6 +39,7 @@ public class Ball {
     public void update(float dt){
         hitFrame();
         pos.add(velocity.x*dt, velocity.y*dt);
+        bounds.setPosition(getPos().x, getPos().y);
     };
 
     public Vector2 getPos() {
@@ -55,6 +60,14 @@ public class Ball {
         }
     }
 
+    public boolean outOfPlay(){
+        if(getPos().x > Game.WIDTH-ball.getWidth() || getPos().x < 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     private int getStartingDirection(){
         if (Math.random() > 0.5) {
             return 1;
@@ -64,12 +77,10 @@ public class Ball {
     }
 
     private void hitFrame(){
-        if (getPos().y > Game.HEIGHT || getPos().y < 0){
+        if (getPos().y > Game.HEIGHT-ball.getWidth() || getPos().y < 0){
             velocity.y = -velocity.y;
         }
     }
 
-    private void reset() {
-        pos = new Vector2(INITIALXPOS, INITIALYPOS);
-    }
+
 }
