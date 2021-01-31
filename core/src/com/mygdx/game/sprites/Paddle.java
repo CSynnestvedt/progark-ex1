@@ -7,7 +7,7 @@ import com.mygdx.game.Game;
 
 public abstract class Paddle {
 
-    protected int SPEED = 100; // Probably needs to be changed
+    protected int SPEED = 200; // Probably needs to be changed
 
     protected Texture texture;
     protected Rectangle bounds;
@@ -44,5 +44,6 @@ public abstract class Paddle {
     public Texture getTexture() { return texture; }
     public abstract void update(float dt);
     public void dispose() { texture.dispose();}
+    public Rectangle getBounds(){ return bounds; }
 
 }

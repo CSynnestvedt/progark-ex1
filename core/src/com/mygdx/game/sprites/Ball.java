@@ -9,7 +9,7 @@ public class Ball {
 
     private static final float INITIALXPOS = (float) (Game.WIDTH/2 - 7.5);
     private static final float INITIALYPOS = (float) (Game.HEIGHT/2 - 7.5);
-    private static final int INITIALSPEED = 250;
+    private static final int INITIALSPEED = 150;
 
     private Vector2 pos;
     private Vector2 velocity;

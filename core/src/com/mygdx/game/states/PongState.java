@@ -44,6 +44,8 @@ public class PongState extends State {
         handleInput();
         if (inPlay) {
             ball.update(dt);
+
+            ball.handleCollision(playerPaddle.getBounds());
             if (ball.outOfPlay()) {
                 goal();
             }
