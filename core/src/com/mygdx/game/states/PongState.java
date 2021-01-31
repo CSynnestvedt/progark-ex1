@@ -39,6 +39,7 @@ public class PongState extends State {
     @Override
     protected void handleInput() {
         if (Gdx.input.justTouched()) {
+            super.handleInput();
             if (!inPlay) {
                 ball.handleInput();
                 inPlay = true;
@@ -67,6 +68,7 @@ public class PongState extends State {
         batch.setProjectionMatrix(cam.combined);
         batch.begin();
         batch.draw(bg, 0, 0);
+        super.render(batch);
         batch.draw(ball.getTexture(), ball.getPos().x, ball.getPos().y);
         bmf.draw(batch, toString(), 500 - textWidth / 2, 650);
         batch.draw(playerPaddle.getTexture(), playerPaddle.getPos().x, playerPaddle.getPos().y);

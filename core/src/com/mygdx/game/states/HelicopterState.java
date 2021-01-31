@@ -1,5 +1,6 @@
 package com.mygdx.game.states;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -29,15 +30,9 @@ public class HelicopterState extends State {
         cam.setToOrtho(false, Game.WIDTH, Game.HEIGHT);
     }
 
-
-
-    protected void handleInput() {
-
-    }
-
     @Override
     public void update(float dt) {
-        handleInput();
+        if (Gdx.input.justTouched()) handleInput();
         for (int i = 0; i < helicopterArray.size()-1; i++) {
             if (helicopterArray.get(i) instanceof AnimationHelicopter) {
                 for (int j = i+1; j < helicopterArray.size(); j++) {
@@ -60,6 +55,7 @@ public class HelicopterState extends State {
     public void render(SpriteBatch batch) {
         batch.setProjectionMatrix(cam.combined);
         batch.begin();
+        super.render(batch);
         for (Helicopter helicopter: helicopterArray) {
             if (helicopter instanceof AnimationHelicopter)
                 batch.draw(((AnimationHelicopter) helicopter).getTextureRegion(), helicopter.getPosition().x, helicopter.getPosition().y);
