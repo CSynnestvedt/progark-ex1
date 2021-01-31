@@ -24,6 +24,21 @@ public abstract class Paddle {
         velocity = new Vector2(0, 0);
     }
 
+    public void move(float ySpeed) {
+        velocity.set(0, ySpeed);
+        if (isBoundaryHit()) {
+            velocity.set(0, 0);
+        }
+        position.add(velocity);
+    }
+
+    protected boolean isBoundaryHit() {
+        boolean roofHit = bounds.y + bounds.height >= Game.HEIGHT;
+        boolean isMovingDown = velocity.y < 0;
+        boolean floorHit = bounds.y <= 0;
+        return roofHit && (!isMovingDown) || floorHit && isMovingDown;
+    }
+
     public Vector2 getPos() { return position; }
     public Texture getTexture() { return texture; }
     public abstract void update(float dt);
