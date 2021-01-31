@@ -17,6 +17,7 @@ public class Ball {
     private Vector2 velocity;
     private Texture ball;
     private Rectangle bounds;
+    private int bounceCount = 0;
 
     public Ball() {
         ball = new Texture("ball.png");
@@ -49,6 +50,11 @@ public class Ball {
             velocity.scl(1.05f);
             timePassed = 0;
         }
+        for (int i=1; i<10; i++){
+            if (bounceCount==5*i){
+                velocity.add(25, 25);
+            }
+        }
     };
 
     public Vector2 getPos() {
@@ -66,6 +72,7 @@ public class Ball {
     public void handleCollision(Rectangle paddle) {
         if (bounds.overlaps(paddle)) {
             velocity.x = -velocity.x;
+            bounceCount++;
         }
     }
 
