@@ -13,11 +13,9 @@ public class PilotedHelicopter extends Helicopter {
 
     Vector2 distanceRay = new Vector2();
     Vector2 touch = new Vector2();
-    Camera cam;
 
-    public PilotedHelicopter(int x, int y, Camera cam) {
+    public PilotedHelicopter(int x, int y) {
         super(x, y);
-        this.cam = cam;
         TEXTURE_X_CENTRE = texture.getWidth() / 2;
         TEXTURE_Y_CENTRE = texture.getHeight() / 2;
     }

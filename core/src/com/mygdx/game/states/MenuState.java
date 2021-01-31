@@ -3,8 +3,10 @@ package com.mygdx.game.states;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.Game;
+import com.mygdx.game.sprites.AnimationHelicopter;
 import com.mygdx.game.sprites.AutoHelicopter;
 import com.mygdx.game.sprites.Helicopter;
 import com.mygdx.game.sprites.PilotedHelicopter;
@@ -62,8 +64,24 @@ public class MenuState extends State {
 
     private void generateStates() {
         Helicopter autoCopter = new AutoHelicopter(500, 350);
-        Helicopter pilotCopter = new PilotedHelicopter(500, 350, cam);
+        Helicopter pilotCopter = new PilotedHelicopter(500, 350);
+        Helicopter animCopter1 = new AnimationHelicopter(randomPos(), randomVelocity());
+        Helicopter animCopter2 = new AnimationHelicopter(randomPos(), randomVelocity());
+        Helicopter animCopter3 = new AnimationHelicopter(randomPos(), randomVelocity());
         states.add(new HelicopterState(gsm, autoCopter));
-        states.add(new HelicopterState(gsm, pilotCopter)); // Add more states here as they are created
+        states.add(new HelicopterState(gsm, pilotCopter));
+        states.add(new HelicopterState(gsm, animCopter1, animCopter2, animCopter3)); // Add more states here as they are created
+    }
+
+    private Vector2 randomPos(){
+        int x = (int) Math.floor(Math.random()*(Game.WIDTH - 130));
+        int y = (int) Math.floor(Math.random()*(Game.HEIGHT - 52));
+        return new Vector2(x, y);
+    }
+
+    private Vector2 randomVelocity(){
+        int x = (int) Math.floor(Math.random()*(600) - 300);
+        int y = (int) Math.floor(Math.random()*(600) - 300);
+        return new Vector2(x, y);
     }
 }
