@@ -5,23 +5,25 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.Game;
 import com.mygdx.game.sprites.Ball;
+import com.mygdx.game.sprites.Paddle;
+import com.mygdx.game.sprites.PlayerPaddle;
 
 public class PongState extends State {
-
-    private Ball ball;
-    //private Paddle playerPaddle;
-    //private Paddle opponentPaddle;
 
     private int scorePlayer, scoreOpponent;
     private boolean inPlay = false;
 
     private BitmapFont bmf = new BitmapFont();
 
+    private Ball ball;
+    private Paddle playerPaddle;
+    private Paddle opponentPaddle;
+
     public PongState(GameStateManager gsm) {
         super(gsm);
         ball = new Ball();
-        //playerPaddle = new Paddle(true);
-        //opponentPaddle = new OpponentPaddle(false);
+        playerPaddle = new PlayerPaddle();
+        // opponentPaddle = new OpponentPaddle();
         cam.setToOrtho(false, Game.WIDTH, Game.HEIGHT);
     }
 
@@ -36,6 +38,7 @@ public class PongState extends State {
         }
     }
 
+
     @Override
     public void update(float dt) {
         handleInput();
@@ -45,9 +48,8 @@ public class PongState extends State {
                 goal();
             }
         }
-        //playerPaddle.update(dt);
-        //opponentPaddle.update(dt);
-
+        playerPaddle.update(dt);
+        // opponentPaddle.update(dt);
     }
 
     @Override
@@ -56,16 +58,17 @@ public class PongState extends State {
         batch.setProjectionMatrix(cam.combined);
         batch.begin();
         batch.draw(ball.getTexture(), ball.getPos().x, ball.getPos().y);
-        //batch.draw(playerPaddle.getTexture(), playerPaddle.getPos().x, playerPaddle.getPos().y);
         //batch.draw(opponentPaddle.getTexture(), opponentPaddle.getPos().x, opponentPaddle.getPos().y);
         bmf.draw(batch, toString(), 500, 650);
+        batch.draw(playerPaddle.getTexture(), playerPaddle.getPos().x, playerPaddle.getPos().y);
+        // batch.draw(opponentPaddle.getTexture(), opponentPaddle.getPos().x, opponentPaddle.getPos().y);
         batch.end();
     }
 
     @Override
     public void dispose() {
         ball.dispose();
-        //playerPaddle.dispose();
+        playerPaddle.dispose();
         //opponentPaddle.dispose();
     }
 
