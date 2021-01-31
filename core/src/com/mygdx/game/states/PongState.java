@@ -3,6 +3,7 @@ package com.mygdx.game.states;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.Game;
+import com.mygdx.game.sprites.Ball;
 
 public class PongState extends State {
 
