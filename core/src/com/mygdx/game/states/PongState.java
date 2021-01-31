@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.Game;
 import com.mygdx.game.sprites.Ball;
+import com.mygdx.game.sprites.OpponentPaddle;
 import com.mygdx.game.sprites.Paddle;
 import com.mygdx.game.sprites.PlayerPaddle;
 
@@ -23,13 +24,12 @@ public class PongState extends State {
         super(gsm);
         ball = new Ball();
         playerPaddle = new PlayerPaddle();
-        // opponentPaddle = new OpponentPaddle();
+        opponentPaddle = new OpponentPaddle(ball);
         cam.setToOrtho(false, Game.WIDTH, Game.HEIGHT);
     }
 
     @Override
     protected void handleInput() {
-        //playerPaddle.handleInput();
         if (Gdx.input.justTouched()) {
             if (!inPlay) {
                 ball.handleInput();
@@ -44,14 +44,14 @@ public class PongState extends State {
         handleInput();
         if (inPlay) {
             ball.update(dt);
-
             ball.handleCollision(playerPaddle.getBounds());
+            ball.handleCollision(opponentPaddle.getBounds());
             if (ball.outOfPlay()) {
                 goal();
             }
         }
         playerPaddle.update(dt);
-        // opponentPaddle.update(dt);
+        opponentPaddle.update(dt);
     }
 
     @Override
@@ -60,10 +60,9 @@ public class PongState extends State {
         batch.setProjectionMatrix(cam.combined);
         batch.begin();
         batch.draw(ball.getTexture(), ball.getPos().x, ball.getPos().y);
-        //batch.draw(opponentPaddle.getTexture(), opponentPaddle.getPos().x, opponentPaddle.getPos().y);
         bmf.draw(batch, toString(), 500, 650);
         batch.draw(playerPaddle.getTexture(), playerPaddle.getPos().x, playerPaddle.getPos().y);
-        // batch.draw(opponentPaddle.getTexture(), opponentPaddle.getPos().x, opponentPaddle.getPos().y);
+        batch.draw(opponentPaddle.getTexture(), opponentPaddle.getPos().x, opponentPaddle.getPos().y);
         batch.end();
     }
 
@@ -71,7 +70,7 @@ public class PongState extends State {
     public void dispose() {
         ball.dispose();
         playerPaddle.dispose();
-        //opponentPaddle.dispose();
+        opponentPaddle.dispose();
     }
 
     public void goal() {

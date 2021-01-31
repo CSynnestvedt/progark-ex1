@@ -54,8 +54,8 @@ public class Ball {
         ball.dispose();
     }
 
-    public void handleCollision(Rectangle padle) {
-        if (bounds.overlaps(padle)) {
+    public void handleCollision(Rectangle paddle) {
+        if (bounds.overlaps(paddle)) {
             velocity.x = -velocity.x;
         }
     }
