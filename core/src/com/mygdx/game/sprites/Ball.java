@@ -9,7 +9,7 @@ public class Ball {
 
     private static final float INITIALXPOS = (float) (Game.WIDTH/2 - 7.5);
     private static final float INITIALYPOS = (float) (Game.HEIGHT/2 - 7.5);
-    private static final int INITIALSPEED = 150;
+    private static final int INITIALSPEED = 250;
 
     private Vector2 pos;
     private Vector2 velocity;
@@ -54,8 +54,8 @@ public class Ball {
         ball.dispose();
     }
 
-    public void handleCollision(Rectangle padle) {
-        if (bounds.overlaps(padle)) {
+    public void handleCollision(Rectangle paddle) {
+        if (bounds.overlaps(paddle)) {
             velocity.x = -velocity.x;
         }
     }

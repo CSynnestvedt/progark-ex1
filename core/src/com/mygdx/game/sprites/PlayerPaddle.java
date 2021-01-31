@@ -16,13 +16,4 @@ public class PlayerPaddle extends Paddle {
             handleMovement(yInGameCoords, dt);
         }
     }
-
-    private void handleMovement(float y, float dt) {
-        final float MAX_MOVEMENT = SPEED * dt;
-        float distance = position.y + bounds.height / 2 - y;
-        boolean canReach = Math.abs(distance) <= MAX_MOVEMENT;
-        float movement = canReach ? Math.abs(distance) : MAX_MOVEMENT;
-        movement = distance > 0 ? -movement : movement;
-        move(movement);
-    }
 }

@@ -40,6 +40,15 @@ public abstract class Paddle {
         return (roofHit && (!isMovingDown)) || (floorHit && isMovingDown);
     }
 
+    protected void handleMovement(float y, float dt) {
+        final float MAX_MOVEMENT = SPEED * dt;
+        float distance = position.y + bounds.height / 2 - y;
+        boolean canReach = Math.abs(distance) <= MAX_MOVEMENT;
+        float movement = canReach ? Math.abs(distance) : MAX_MOVEMENT;
+        movement = distance > 0 ? -movement : movement;
+        move(movement);
+    }
+
     public Vector2 getPos() { return position; }
     public Texture getTexture() { return texture; }
     public abstract void update(float dt);
