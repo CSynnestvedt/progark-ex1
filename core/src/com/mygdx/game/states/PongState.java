@@ -1,7 +1,9 @@
 package com.mygdx.game.states;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.Game;
 import com.mygdx.game.sprites.Ball;
@@ -15,6 +17,9 @@ public class PongState extends State {
     private boolean inPlay = false;
 
     private BitmapFont bmf = new BitmapFont();
+    private float textWidth;
+    private Texture bg = new Texture("bg.png");
+
 
     private Ball ball;
     private Paddle playerPaddle;
@@ -26,6 +31,9 @@ public class PongState extends State {
         playerPaddle = new PlayerPaddle();
         opponentPaddle = new OpponentPaddle(ball);
         cam.setToOrtho(false, Game.WIDTH, Game.HEIGHT);
+        bmf.getData().setScale(2);
+        GlyphLayout layout = new GlyphLayout(bmf, toString());
+        textWidth = layout.width;
     }
 
     @Override
@@ -56,11 +64,11 @@ public class PongState extends State {
 
     @Override
     public void render(SpriteBatch batch) {
-        Gdx.gl.glClearColor( 0, 0, 0, 1);
         batch.setProjectionMatrix(cam.combined);
         batch.begin();
+        batch.draw(bg, 0, 0);
         batch.draw(ball.getTexture(), ball.getPos().x, ball.getPos().y);
-        bmf.draw(batch, toString(), 500, 650);
+        bmf.draw(batch, toString(), 500 - textWidth / 2, 650);
         batch.draw(playerPaddle.getTexture(), playerPaddle.getPos().x, playerPaddle.getPos().y);
         batch.draw(opponentPaddle.getTexture(), opponentPaddle.getPos().x, opponentPaddle.getPos().y);
         batch.end();
@@ -84,6 +92,6 @@ public class PongState extends State {
     }
 
     public String toString(){
-        return(scorePlayer + "  -  " + scoreOpponent);
+        return(scorePlayer + "     " + scoreOpponent);
     }
 }
