@@ -6,9 +6,10 @@ import java.util.Stack;
 
 public class GameStateManager {
 
+    private static final GameStateManager gsm = new GameStateManager();
     private Stack<State> states;
 
-    public GameStateManager() {
+    private GameStateManager() {
         states = new Stack<State>();
     }
 
@@ -27,5 +28,9 @@ public class GameStateManager {
 
     public void render(SpriteBatch batch) {
         states.peek().render(batch);
+    }
+
+    public static GameStateManager getInstance() {
+        return gsm;
     }
 }
