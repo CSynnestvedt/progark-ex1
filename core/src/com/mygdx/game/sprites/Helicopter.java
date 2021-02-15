@@ -19,8 +19,6 @@ public abstract class Helicopter {
         texture = new Texture("heli1.png");
     }
 
-    public abstract void update(float dt);
-
     public Vector2 getPosition() {
         return position;
     }

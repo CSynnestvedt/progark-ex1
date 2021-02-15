@@ -18,16 +18,12 @@ public class GameStateManager {
     }
 
     public void set(State state){
-        states.pop().dispose();
+        states.pop();
         states.push(state);
     }
 
     public void update(float dt) {
         states.peek().update(dt);
-    }
-
-    public void render(SpriteBatch batch) {
-        states.peek().render(batch);
     }
 
     public static GameStateManager getInstance() {

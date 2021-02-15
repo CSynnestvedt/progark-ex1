@@ -17,61 +17,19 @@ import java.util.List;
 
 public class HelicopterState extends State {
 
-    private List<Helicopter> helicopterArray = new ArrayList<Helicopter>();
-    private BitmapFont bmf = new BitmapFont();
+    private PilotedHelicopter heli = new PilotedHelicopter(350 , 350);
 
-
-    public HelicopterState(GameStateManager gsm, Helicopter ... helicopters){
+    public HelicopterState(GameStateManager gsm){
         super(gsm);
-        for (Helicopter helicopter : helicopters) {
-            helicopterArray.add(helicopter);
-        }
-
-        cam.setToOrtho(false, Game.WIDTH, Game.HEIGHT);
     }
 
     @Override
     public void update(float dt) {
         if (Gdx.input.justTouched()) handleInput();
-        for (int i = 0; i < helicopterArray.size()-1; i++) {
-            if (helicopterArray.get(i) instanceof AnimationHelicopter) {
-                for (int j = i+1; j < helicopterArray.size(); j++) {
-                    if (helicopterArray.get(j) instanceof AnimationHelicopter) {
-                        AnimationHelicopter iHelicopter = (AnimationHelicopter) helicopterArray.get(i);
-                        AnimationHelicopter jHelicopter = (AnimationHelicopter) helicopterArray.get(j);
-                        if (iHelicopter.collision(jHelicopter.getBounds())){
-                            iHelicopter.changeDirection(jHelicopter);
-                        }
-                    }
-                }
-            }
-        }
-        for (Helicopter helicopter : helicopterArray) {
-            helicopter.update(dt);
-        }
+        heli.update(dt, touch, Gdx.input.isTouched());
     }
 
-    @Override
-    public void render(SpriteBatch batch) {
-        batch.setProjectionMatrix(cam.combined);
-        batch.begin();
-        super.render(batch);
-        for (Helicopter helicopter: helicopterArray) {
-            if (helicopter instanceof AnimationHelicopter)
-                batch.draw(((AnimationHelicopter) helicopter).getTextureRegion(), helicopter.getPosition().x, helicopter.getPosition().y);
-            else
-                batch.draw(helicopter.getTexture(), helicopter.getPosition().x, helicopter.getPosition().y);
-            if (helicopter instanceof PilotedHelicopter) {
-                bmf.draw(batch, helicopter.toString(), 10, 680);
-            }
-        }
-        batch.end();
-    }
-
-    @Override
-    public void dispose() {
-        for (Helicopter helicopter: helicopterArray) {
-            helicopter.dispose();
-        }
+    public PilotedHelicopter getHelicopter() {
+        return this.heli;
     }
 }

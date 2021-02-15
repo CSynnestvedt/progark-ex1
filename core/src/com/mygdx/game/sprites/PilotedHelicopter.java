@@ -12,7 +12,6 @@ public class PilotedHelicopter extends Helicopter {
     private static int TEXTURE_Y_CENTRE;
 
     Vector2 distanceRay = new Vector2();
-    Vector2 touch = new Vector2();
 
     public PilotedHelicopter(int x, int y) {
         super(x, y);
@@ -20,16 +19,14 @@ public class PilotedHelicopter extends Helicopter {
         TEXTURE_Y_CENTRE = texture.getHeight() / 2;
     }
 
-    @Override
-    public void update(float dt) {
-        if (Gdx.input.isTouched()) {
-            handleMovement(dt);
+    public void update(float dt, Vector2 touch, boolean isTouched) {
+        if (isTouched) {
+            handleMovement(dt, touch);
             updateTexture(); // In case copter is moving the other way now
         }
     }
 
-    private void handleMovement(float dt) {
-        touch.set(Gdx.input.getX(), Gdx.input.getY());
+    private void handleMovement(float dt, Vector2 touch) {
         touch.y = Game.HEIGHT - touch.y; // Flip touch coordinate system so it matches texture coord system
         float travelDistance = SPEED * dt;
         distanceRay.set(touch.x, touch.y).sub(position.x + TEXTURE_X_CENTRE, position.y + TEXTURE_Y_CENTRE); // Vector from touchpoint to helicopter
