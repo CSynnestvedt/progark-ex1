@@ -2,28 +2,24 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.game.sprites.Helicopter;
-import com.mygdx.game.states.GameStateManager;
-import com.mygdx.game.states.HelicopterState;
-import com.mygdx.game.states.MenuState;
+import com.mygdx.game.states.ControllerManager;
+import com.mygdx.game.states.HelicopterController;
 import com.mygdx.game.views.HelicopterView;
 
 public class Game extends ApplicationAdapter {
-
 	public static final int WIDTH = 1000;
 	public static final int HEIGHT = 700;
 
-	private GameStateManager gsm;
-	private HelicopterState helicopterState;
+	private ControllerManager gsm;
+	private HelicopterController helicopterState;
 	private HelicopterView helicopterView;
 
 
 	@Override
 	public void create () {
-		gsm = GameStateManager.getInstance();
-		gsm.set(new HelicopterState(gsm));
+		gsm = ControllerManager.getInstance();
+		helicopterState = new HelicopterController(gsm);
+		gsm.push(helicopterState);
 		helicopterView = new HelicopterView(helicopterState.getHelicopter());
 	}
 

@@ -21,22 +21,22 @@ public class PilotedHelicopter extends Helicopter {
 
     public void update(float dt, Vector2 touch, boolean isTouched) {
         if (isTouched) {
-            handleMovement(dt, touch);
+            handleMovement(dt, touch.x, touch.y);
             updateTexture(); // In case copter is moving the other way now
         }
     }
 
-    private void handleMovement(float dt, Vector2 touch) {
-        touch.y = Game.HEIGHT - touch.y; // Flip touch coordinate system so it matches texture coord system
+    private void handleMovement(float dt, float x, float y) {
+        // y = Game.HEIGHT - y; // Flip touch coordinate system so it matches texture coord system
         float travelDistance = SPEED * dt;
-        distanceRay.set(touch.x, touch.y).sub(position.x + TEXTURE_X_CENTRE, position.y + TEXTURE_Y_CENTRE); // Vector from touchpoint to helicopter
+        distanceRay.set(x, y).sub(position.x + TEXTURE_X_CENTRE, position.y + TEXTURE_Y_CENTRE); // Vector from touchpoint to helicopter
 
         boolean canReachDest = distanceRay.len() <= travelDistance;
-        boolean touchToLeftOfCopter = touch.x < position.x;
-        boolean touchAboveCopter = touch.y > position.y;
+        boolean touchToLeftOfCopter = x < position.x;
+        boolean touchAboveCopter = y > position.y;
         if (canReachDest) {
-            velocity.x = touchToLeftOfCopter ? touch.x + TEXTURE_X_CENTRE : touch.x - TEXTURE_X_CENTRE;
-            velocity.y = touchAboveCopter ? touch.y + TEXTURE_Y_CENTRE : touch.y - TEXTURE_Y_CENTRE;
+            velocity.x = touchToLeftOfCopter ? x + TEXTURE_X_CENTRE : x - TEXTURE_X_CENTRE;
+            velocity.y = touchAboveCopter ? y + TEXTURE_Y_CENTRE : y - TEXTURE_Y_CENTRE;
         } else {
             distanceRay.nor().scl(travelDistance);
             velocity.x = -distanceRay.x;
